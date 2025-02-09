@@ -58,10 +58,10 @@ see solution.py
 
 Assume `N` is the length of the input string
 
-- Time Complexity: O(N * N^2)
+- Time Complexity: O(N * 2^N)
     * The total number of nodes in the recursion tree is 2^n, because each element has two choices (to be included or not). 
     * Each node requires O(N)  time to copy the path, so the overall time complexity is O(N * 2^n). 
-- Space Complexity: O(N * N^2)
+- Space Complexity: O(N * 2^N)
     * For the total space of the recursion call stack, it is O(N)
     * For the space complexity of storing the result res:
         *The total number of subsets is 2^n, 
