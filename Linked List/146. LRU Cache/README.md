@@ -8,47 +8,57 @@
 #### Understand
 
 
-1. Any requirement on time/space complexity?
-
-2. Can the input be empty?
-    * no, `nums.length` is at least 1.
-3. Are there duplicate elements in the input?
-    * yes, the result must not contain duplicate subsets
-4. ***sorted?***
-    * no
-4. What is the range of the size of the input array nums? Is there a maximum number of elements that nums can have?
+    1. Any requirement on time/space complexity?
+        * The functions get and put must each run in O(1) average time complexity.
 
 
 ### Match
 
-1. set:
-    * initialize an empty set `res` to store the result, initialize an empty array  `path` to store the subsets
-
-2. Sorting + Pruning Duplicates
-    * Sort the input array nums to group duplicates together.
-    * pruning: If the current element is the same as the previous element, skip it to avoid generating duplicate subsets.
+    1. HashMap: 
+        1. Get: O(1), Put: O(1)
+        2. Maps: key -> node
+    2. Doubly Linked List:
+        1. Remove: O(1), Insert: O(1)
+        2. Head = most recently used, tail = least recently used
     
 
 
 ### Plan
-1. Initialize an empty array `res` to store the result, Initialize an empty array  `path` to store the subsets
-2. Sort the input array nums to group duplicates together.
-3. define a recursion function dfs(i):
-    * edge case: if i == lenght of nums
-        * add a copyt of path to res
-        * break the dfs
-    * recursion case:
-    * include nums[i]:
-        * add nums[i] to the path
-        * call dfs(i + 1)
-    * Skip duplicate elements using a while loop
-        * Ensures that we do not go out of bounds
-        * If the current element nums[i] is equal to the next element nums[i + 1], it means it's a duplicate.
-    * exclude nums[i]:
-        * remove the last element from path (backtrack)
-        * call dfs(i + 1)
-3. call dfs(0) to start backtracking
-4. return res
+        1. Class Node
+            1. Key
+            2. Value
+            3. Pre
+            4. Next
+        2. Initialize LRU cache (self, capacity: int)
+            1. Capacity
+            2. Dummy node
+            3. Dictionary 
+        3. Function get (self, key: int)
+            1. Node = get_node
+            2. Return node.value if node else -1
+        4. Function put (self, key: int, value: int)
+            1. If node exist:
+                1. Change value
+            2. If not exist:
+                1. Creat new node in dictionary
+                2. Push_front
+            3. If Out of capacity:
+                1. Delete key at the map
+                2. Remove the last node
+        5. Function get_node (key)
+            1. If not exist:
+                1. Return None
+            2. If  exist:
+                1. Node = dic[key]
+                2. remove(node)
+                3. push_front(node)
+        6. Function remove (key)
+            1. Linked list
+        7. Function push_front (key)
+            1. Linked list
+
+
+
 
 
 
@@ -61,10 +71,6 @@ see solution.py
 ### Evaluate
 
 
-Assume `N` is the length of the input string
+- Time Complexity: O(1)
 
-- Time Complexity: O(N * 2^N)
-    * O(2^N) * O(N)  (number of call) * (copying subset)
-- Space Complexity: O(N * 2^N)
-    * recursion stack: O(N) depth, O(N) space usage
-    * storage for subsets: O(2^N) subsets, each having a maximum lenght of n, O(N * 2^N)
+- Space Complexity: O(N)
