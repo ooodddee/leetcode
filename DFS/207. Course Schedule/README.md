@@ -8,28 +8,36 @@
 #### Understand
 
 
-1. empty?
-    * no, the list has at least 1 node
-2. edge case:
-    * only one node, remove first
-    * remove head node
-    * remove last node
-3. what if n is invalid? (greater than length of list)
-    * n is always valid
-
+1. What if there are no prerequisites?
+    * return True
+2. Are there self-loops (like [0,0])?
+    * No, ai ≠ bi always.
+3. edge case:
+    * No prerequisites : prerequisites = [] : True
+    * Single valid dependency : prerequisites = [[1, 0]] : True
+    * Cycle exists : [[0,1],[1,0]] : False
+    * Disconnected courses : prerequisites = [[1,0],[3,2]] : True
 
 
 ### Match
 
-1. fast and slow pointers
-2. dummy node (to handle edge cases (removing the head))
+detecting cycles in a directed graph. If a cycle exists, it means we cannot complete all courses.
+1. DFS (recursion)
+2. BFS (topological sorting / Kahn's algorithm)
 
 
 ### Plan
-1. use dummy node pointing to head, both fast and slow start at dummy
-2. move fast pointer n steps forward
-3. move fast and slow together, when fast reaches the end, slow is right before the node to remove
-4. change slow.next to slow.next.next
+1. bulid an adjacency list:
+    * adj[a] = [b1, b2, ...] a depends on b1, b2, ...
+    * store visited nodes in vis (set) to track cycle
+2. dfs function:
+    * a course is alreadly visited -> return False
+    * a course has no prerequisites -> return True
+    * recursively check: if any prerequisite cannot be complete(False) -> return False
+    * backtrack (remove from vis set) once we finish exploring
+    * mark course as completed (adj[cur] = [])
+3. try every course
+
 
 ### Implement
 
@@ -39,10 +47,11 @@ see solution.py
 
 ### Evaluate
 
+E is the number of prerequisite pairs.
+V is the number of numCourses
 
 
-
-- Time Complexity: O(N), 
+- Time Complexity: O(V + E), 
     
-- Space Complexity: O(1), (No extra data structures used)
+- Space Complexity: O(V + E),  
     
