@@ -8,24 +8,27 @@
 #### Understand
 
 
-1. empty?
-    * no
+1. Empty? Return [newInterval]
 2. sorted:
     * no
     
 
 ### Match
 
-1. sorting
+1. Sorting and merging overlaps
+    1. Add all intervals that come before newInterval
+    2. Merge overlapping intervals with newInterval
+    3. Add all intervals that come after newInterval
 
 
 ### Plan
-1. Sort the intervals by the start value.
-2. Initialize a result list with the first interval.
-3. Iterate through the sorted intervals:
-    1. If the current interval overlaps with the last interval in the result, merge them.
-    2. Otherwise, add the interval as a new non-overlapping interval.
-4. Return the result list.
+1. Initialize an empty result list res
+2. Traverse the intervals array:
+    1. If the current interval ends before newInterval starts, add it to res
+    2. If the current interval starts after newInterval ends , add newInterval to res
+    3. If the current interval overlaps with newInterval, merge them by updating newInterval
+3. If newInterval hasn’t been added, add it to res
+4. Return res
 
 ### Implement
 
@@ -35,7 +38,7 @@ see solution.py
 
 ### Evaluate
 
-- Time Complexity: O(nlog n), sorting: O(nlog n), iterating : O(n),
+- Time Complexity: O(N), iterate the entire intervals
     
-- Space Complexity: O(N)
+- Space Complexity: need a new res list to sort the result
     
